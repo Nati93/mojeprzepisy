@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+<link rel="stylesheet" href="themes/theme1.css" />
+<link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+
+<script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+<script type="text/javascript" src="components/loader.js"></script>
+<script src="cordova.js"></script>
+
+
+
+
+<script type="text/javascript" charset="utf-8">
+	$( document ).on( "pagecreate", function() {
+			$( "body > [data-role='panel']" ).panel();
+			$( "body > [data-role='panel'] [data-role='listview']" ).listview();
+		});
+		$( document ).one( "pageshow", function() {
+			$( "body > [data-role='header']" ).toolbar();
+			$( "body > [data-role='header'] [data-role='navbar']" ).navbar();
+		});
+
+</script>
+
+<meta charset="utf-8">
+</head>
+<body onload="onDeviceReady()">
+		<!-- <div data-role="page" id="stronaGlowna">
+		  <div data-role="panel" id="myPanel1" data-display="overlay"> 
+		    <h2>Moje przepisy</h2>
+		    <ul data-role="listview">
+			      <li><a href="#stronaGlowna" class="ui-btn ui-icon-home ui-btn-icon-right">Strona główna</a></li>
+			      <li><a href="#sniadanie" class="ui-btn ui-icon-gear ui-btn-icon-right">Śniadanie</a></li>
+			      <li><a href="#obiad" class="ui-btn ui-icon-clock ui-btn-icon-right">Obiad</a></li>
+			      <li><a href="#kolacja" class="ui-btn ui-icon-star ui-btn-icon-right">Kolacja</a></li>
+			      <li><a href="#deser" class="ui-btn ui-icon-heart ui-btn-icon-right">Deser</a></li>
+				  <li><a href="#deser" class="ui-btn ui-icon-plus ui-btn-icon-right">Dodaj przepis</a></li>
+				  <li><a href="#informacje" class="ui-btn ui-icon-info ui-btn-icon-right">Informacje</a></li>
+    		</ul>	    
+		  </div> 
+
+		  <div data-role="header">
+		    <h1>Strona główna</h1>
+		    <a href="#myPanel1" class="ui-btn ui-icon-bars ui-btn-icon-left ui-btn-icon-notext ui-btn-inline ui-corner-all ui-shadow">Open Panel</a>
+		  </div>
+
+		  <div data-role="main" class="ui-content">
+
+<button id="nawiguj" onclick="nav()">Nawiguj do restauracji</button> -->
+
+
+<script>
+function nav(){
+launchnavigator.isAppAvailable(launchnavigator.APP.GOOGLE_MAPS, function(isAvailable){
+    var app;
+    if(isAvailable){
+        app = launchnavigator.APP.GOOGLE_MAPS;
+    }else{
+        alert("Google Maps not available - falling back to user selection");
+        app = launchnavigator.APP.USER_SELECT;
+    }
+    launchnavigator.navigate("ul.Rakowicka 27, Kraków, Polska", {
+        app: app
+    });
+})
+}; 
+
+
+function zdjecie() {
+			navigator.camera.getPicture(onSuccess, onFail, {
+				quality: 50,
+				destinationType: Camera.DestinationType.FILE_URI,
+				saveToPhotoAlbum: true });
+
+			function onSuccess(imageData) {
+				image = imageData;
+				span = document.getElementById("span");
+				span.innerHTML = ['<img src="', image,
+								'" title="', image, '" style="width: 50%; height: 50%"/>'].join(''); 
+			}
+
+			function onFail(message) {
+				alert('Failed because: ' + message);
+			}
+		}
+	
+function checkConnection() {
+    var networkState = navigator.connection.type;
+
+    var states = {};
+    states[Connection.UNKNOWN]  = 'Nieznany';
+    states[Connection.ETHERNET] = 'Ethernet';
+    states[Connection.WIFI]     = 'WiFi';
+    states[Connection.CELL_2G]  = 'Sieć 2G';
+    states[Connection.CELL_3G]  = 'Sieć 3G';
+    states[Connection.CELL_4G]  = 'Sieć 4G';
+    states[Connection.CELL]     = 'Sieć';
+    states[Connection.NONE]     = 'Brak';
+
+    alert('Typ połączenia ' + states[networkState]);
+};
+
+function picture() {
+            navigator.camera.getPicture(onSuccessP, onFail, { quality: 50,
+            destinationType: Camera.DestinationType.FILE_URI,
+            sourceType : Camera.PictureSourceType.CAMERA,
+            allowEdit: true,
+            encodingType: Camera.EncodingType.JPEG,
+            targetWidth: 300,
+            targetHeight: 300,
+            saveToPhotoAlbum: true
+        });  
+        }
+        
+        function pictureView() {
+            navigator.camera.getPicture(onSuccessP, onFail, { quality: 50,
+            destinationType: Camera.DestinationType.FILE_URI,
+            sourceType : Camera.PictureSourceType.PHOTOLIBRARY,
+            allowEdit: true,
+            encodingType: Camera.EncodingType.JPEG,
+            targetWidth: 300,
+            targetHeight: 300,
+            saveToPhotoAlbum: true
+            });  
+        }
+        
+        function onSuccessP(imageURI) {
+            var image = document.getElementById('myImage');
+            image.src = imageURI;
+        }
+
+        function onFail(message) {
+            console.log(error.source);
+            console.log(error.target);
+            console.log(error.code);
+            alert('Failed because: ' + message);
+        }
+
+
+</script>
+
+<div data-role="header" data-position="fixed" data-theme="a">
+		<h1>Moje przepisy</h1>
+		<a href="#outside" data-icon="bars" data-iconpos="notext">Menu</a>
+		<div data-role="navbar">
+
+		</div>
+	</div>
+
+
+
+<div data-role="page" id="stronaGlowna">
+		<div role="main" class="ui-content">    
+            <div class="ui-field-contain">
+                <h1>Przepisy</h1>
+                <button id="nawiguj" onclick="nav()">Nawiguj do restauracji</button> 
+                <button id="btn_zdjecie" onclick="picture()">Zrób zdjęcie</button>
+                <button id="btn_zobacz" onclick="pictureView()">Zobacze zdjecia</button>
+                <button id="stan_sieci" onclick="checkConnection()">Sprawdź stan sieci</button>
+            </div>    
+		</div><!-- /content -->
+		<div data-role="footer" data-position="fixed">
+			<div data-role="navbar">
+				<h2 align="center"><font color="#1680BC">Składniki</font></h2>
+				 <h3 align="center" id="sklID"></h3>
+				 <h2 align="center"><font color="#1680BC">Przepis</font></h2>
+				 <h3 align="center" id="przID"></h3>
+			</div>
+		</div><!-- /header -->
+	</div><!-- /page -->
+
+
+ <div data-role="page" id="sniadanie">
+		<div role="main" class="ui-content">    
+            <div class="ui-field-contain">
+                <h1>Śniadanie</h1>
+            </div>    
+		</div><!-- /content -->
+		<div data-role="footer" data-position="fixed">
+			<div data-role="navbar">
+				<h2 align="center"><font color="#1680BC">Składniki</font></h2>
+				 <h3 align="center" id="sklID"></h3>
+				 <h2 align="center"><font color="#1680BC">Przepis</font></h2>
+				 <h3 align="center" id="przID"></h3>
+			</div>
+		</div><!-- /header -->
+	</div><!-- /page -->
+
+	<div data-role="page" id="obiad">
+		<div role="main" class="ui-content">  
+            <div class="ui-field-contain">
+                
+            </div>    
+		</div><!-- /content -->
+		<div data-role="footer" data-position="fixed">
+			<div data-role="navbar">
+				<h2 align="center"><font color="#1680BC">Składniki</font></h2>
+				 <h3 align="center" id="sklID"></h3>
+				 <h2 align="center"><font color="#1680BC">Przepis</font></h2>
+				 <h3 align="center" id="przID"></h3>
+			</div>
+		</div><!-- /header -->
+	</div><!-- /page -->
+
+	<div data-role="page" id="kolacja">
+		<div role="main" class="ui-content">   
+            <div class="ui-field-contain">
+                
+            </div>    
+		</div><!-- /content -->
+		<div data-role="footer" data-position="fixed">
+			<div data-role="navbar">
+				<h2 align="center"><font color="#1680BC">Składniki</font></h2>
+				 <h3 align="center" id="sklID"></h3>
+				 <h2 align="center"><font color="#1680BC">Przepis</font></h2>
+				 <h3 align="center" id="przID"></h3>
+			</div>
+		</div><!-- /header -->
+	</div><!-- /page -->
+
+	<div data-role="page" id="deser">
+		<div role="main" class="ui-content">   
+            <div class="ui-field-contain">
+                
+            </div>    
+		</div><!-- /content -->
+		<div data-role="footer" data-position="fixed">
+			<div data-role="navbar">
+				<h2 align="center"><font color="#1680BC">Składniki</font></h2>
+				 <h3 align="center" id="sklID"></h3>
+				 <h2 align="center"><font color="#1680BC">Przepis</font></h2>
+				 <h3 align="center" id="przID"></h3>
+			</div>
+		</div><!-- /header -->
+	</div><!-- /page -->
+
+	<div data-role="page" id="dodajPrzepis">
+		<div role="main" class="ui-content">   
+            <div class="ui-field-contain">
+                
+            </div>    
+		</div><!-- /content -->
+		<div data-role="footer" data-position="fixed">
+			<div data-role="navbar">
+				<h2 align="center"><font color="#1680BC">Składniki</font></h2>
+				 <h3 align="center" id="sklID"></h3>
+				 <h2 align="center"><font color="#1680BC">Przepis</font></h2>
+				 <h3 align="center" id="przID"></h3>
+			</div>
+		</div><!-- /header -->
+	</div><!-- /page -->
+
+<div data-role="page" id="informacje">
+		<div role="main" class="ui-content">   
+            <div class="ui-field-contain">
+                 <h3>O autorze</h3>
+			      <p>Autorzy aplikacji: <b>Justyna Gruca, Natalia Gola </b></p>
+			       <p>Numer grupy dziekańskiej: <b>KrDUIs2012</b></p>
+            </div>    
+		</div><!-- /content -->
+		<div data-role="footer" data-position="fixed">
+			<div data-role="navbar">
+				<h2 align="center"><font color="#1680BC">Składniki</font></h2>
+				 <h3 align="center" id="sklID"></h3>
+				 <h2 align="center"><font color="#1680BC">Przepis</font></h2>
+				 <h3 align="center" id="przID"></h3>
+			</div>
+		</div><!-- /header -->
+	</div><!-- /page -->
+
+<div data-role="panel" id="outside" data-theme="b">
+	   <ul data-role="listview">
+		  <li data-icon="back"><a href="#a" data-rel="close">Powrót</a></li>
+         <li data-icon="false"><a href="#stronaGlowna" class="ui-btn ui-icon-home ui-btn-icon-right" data-transition="slide" onClick="">Strona główna</a></li>
+         <li data-icon="false"><a href="#sniadanie" class="ui-btn ui-icon-edit ui-btn-icon-right" data-transition="slide" onClick="">Śniadanie</a></li>
+          <li data-icon="false"><a href="#obiad" class="ui-btn ui-icon-edit ui-btn-icon-right" data-transition="slide" onClick="">Obiad</a></li>
+		  <li data-icon="false"><a href="#kolacja" class="ui-btn ui-icon-search ui-btn-icon-right" data-transition="slide" onClick="">Kolacja</a></li>
+          <li data-icon="false"><a href="#deser" class="ui-btn ui-icon-info ui-btn-icon-right" data-transition="slide">Deser</a></li>
+          <li data-icon="false"><a href="#dodajPrzepis" class="ui-btn ui-icon-plus ui-btn-icon-right" data-transition="slide">Dodaj przepis</a></li>
+          <li data-icon="false"><a href="#informacje" class="ui-btn ui-icon-info ui-btn-icon-right" data-transition="slide">Informacje</a></li>
+        </ul>
+    </div>
+
+</body>
+</html>
+
+
+<!-- 
+		<div data-role="page" id="sniadanie">
+		  <div data-role="panel" id="myPanel2" data-display="overlay"> 
+		    <h2>Moje przepisy</h2>
+		    <ul data-role="listview">
+			      <li><a href="#stronaGlowna" class="ui-btn ui-icon-home ui-btn-icon-right">Strona główna</a></li>
+			      <li><a href="#sniadanie" class="ui-btn ui-icon-check ui-btn-icon-right">Śniadanie</a></li>
+			      <li><a href="#obiad" class="ui-btn ui-icon-edit ui-btn-icon-right">Obiad</a></li>
+			      <li><a href="#kolacja" class="ui-btn ui-icon-search ui-btn-icon-right">Kolacja</a></li>
+			      <li><a href="#deser" class="ui-btn ui-icon-info ui-btn-icon-right">Deser</a></li>
+				  <li><a href="#deser" class="ui-btn ui-icon-plus ui-btn-icon-right">Dodaj przepis</a></li>
+				  <li><a href="#informacje" class="ui-btn ui-icon-info ui-btn-icon-right">Informacje</a></li>
+    		</ul>	  	    
+		  </div> 
+
+		  <div data-role="header">
+		    <h1>Śniadanie</h1>
+		    <a href="#myPanel2" class="ui-btn ui-icon-bars ui-btn-icon-left ui-btn-icon-notext ui-btn-inline ui-corner-all ui-shadow">Open Panel</a>
+		  </div>
+		 <h2 align="center"><font color="#1680BC">Składniki</font></h2>
+		 <h3 align="center" id="sklID"></h3>
+		 <h2 align="center"><font color="#1680BC">Przepis</font></h2>
+		 <h3 align="center" id="przID"></h3>
+		 
+
+		 <button id="nast" onclick="nastepnePyt()">Nastepny przepis</button>
+		
+		
+	<script>
+	
+
+	
+	</script>
+
+
+		<div data-role="footer">
+		    <h1>© Justyna Gruca, Natalia Gola</h1>
+		</div> 
+		</div>
+
+			<div data-role="page" id="obiad">
+		  <div data-role="panel" id="myPanel3" data-display="overlay"> 
+		    <h2>Moje przepisy</h2>
+		    <ul data-role="listview">
+			      <li><a href="#stronaGlowna" class="ui-btn ui-icon-home ui-btn-icon-right">Strona główna</a></li>
+			      <li><a href="#sniadanie" class="ui-btn ui-icon-gear ui-btn-icon-right">Śniadanie</a></li>
+			      <li><a href="#obiad" class="ui-btn ui-icon-clock ui-btn-icon-right">Obiad</a></li>
+			      <li><a href="#kolacja" class="ui-btn ui-icon-star ui-btn-icon-right">Kolacja</a></li>
+			      <li><a href="#deser" class="ui-btn ui-icon-heart ui-btn-icon-right">Deser</a></li>
+				  <li><a href="#deser" class="ui-btn ui-icon-plus ui-btn-icon-right">Dodaj przepis</a></li>
+				  <li><a href="#informacje" class="ui-btn ui-icon-info ui-btn-icon-right">Informacje</a></li>
+    		</ul>	  	       
+		  </div> 
+
+		  <div data-role="header">
+		    <h1>Obiad</h1>
+		    <a href="#myPanel3" class="ui-btn ui-icon-bars ui-btn-icon-left ui-btn-icon-notext ui-btn-inline ui-corner-all ui-shadow">Open Panel</a>
+		  </div>
+
+		  <h2 align="center"><font color="#1680BC">Składniki</font></h2>
+		 <h3 align="center" id="sklID"></h3>
+		 <h2 align="center"><font color="#1680BC">Przepis</font></h2>
+		 <h3 align="center" id="przID"></h3>
+
+		 <button id="nast" onclick="nastepnePyt()">Nastepny przepis</button>
+	<script>
+
+	
+	</script>
+
+		  </div>
+
+		  <div data-role="footer">
+		    <h1>© Justyna Gruca, Natalia Gola</h1>
+		  </div> 
+		</div> 
+
+
+<div data-role="page" id="kolacja">
+		  <div data-role="panel" id="myPanel4" data-display="overlay"> 
+		    <h2>Moje przepisy</h2>
+		    <ul data-role="listview">
+			      <li><a href="#stronaGlowna" class="ui-btn ui-icon-home ui-btn-icon-right">Strona główna</a></li>
+			      <li><a href="#sniadanie" class="ui-btn ui-icon-gear ui-btn-icon-right">Śniadanie</a></li>
+			      <li><a href="#obiad" class="ui-btn ui-icon-clock ui-btn-icon-right">Obiad</a></li>
+			      <li><a href="#kolacja" class="ui-btn ui-icon-star ui-btn-icon-right">Kolacja</a></li>
+			      <li><a href="#deser" class="ui-btn ui-icon-heart ui-btn-icon-right">Deser</a></li>
+				  <li><a href="#deser" class="ui-btn ui-icon-plus ui-btn-icon-right">Dodaj przepis</a></li>
+				  <li><a href="#informacje" class="ui-btn ui-icon-info ui-btn-icon-right">Informacje</a></li>
+    		</ul>	  	       
+		  </div> 
+
+		  <div data-role="header">
+		    <h1>Kolacja</h1>
+		    <a href="#myPanel4" class="ui-btn ui-icon-bars ui-btn-icon-left ui-btn-icon-notext ui-btn-inline ui-corner-all ui-shadow">Open Panel</a>
+		  </div>
+
+		  <h2 align="center"><font color="#1680BC">Składniki</font></h2>
+		 <h3 align="center" id="sklID"></h3>
+		 <h2 align="center"><font color="#1680BC">Przepis</font></h2>
+		 <h3 align="center" id="przID"></h3>
+		 
+
+		 <button id="nast" onclick="nastepnePyt()">Nastepny przepis</button>
+	
+		  <div data-role="footer">
+		    <h1>© Justyna Gruca, Natalia Gola</h1>
+		  </div> 
+		</div> 
+
+		
+	<div data-role="page" id="deser">
+		  <div data-role="panel" id="myPanel5" data-display="overlay"> 
+		    <h2>Moje przepisy</h2>
+		    <ul data-role="listview">
+				<li><a href="#stronaGlowna" class="ui-btn ui-icon-home ui-btn-icon-right">Strona główna</a></li>
+			      <li><a href="#sniadanie" class="ui-btn ui-icon-gear ui-btn-icon-right">Śniadanie</a></li>
+			      <li><a href="#obiad" class="ui-btn ui-icon-clock ui-btn-icon-right">Obiad</a></li>
+			      <li><a href="#kolacja" class="ui-btn ui-icon-star ui-btn-icon-right">Kolacja</a></li>
+			      <li><a href="#deser" class="ui-btn ui-icon-heart ui-btn-icon-right">Deser</a></li>
+				  <li><a href="#deser" class="ui-btn ui-icon-plus ui-btn-icon-right">Dodaj przepis</a></li>
+				  <li><a href="#informacje" class="ui-btn ui-icon-info ui-btn-icon-right">Informacje</a></li>
+    		</ul>	  	       
+		  </div> 
+
+		  <div data-role="header">
+		    <h1>Deser</h1>
+		    <a href="#myPanel5" class="ui-btn ui-icon-bars ui-btn-icon-left ui-btn-icon-notext ui-btn-inline ui-corner-all ui-shadow">Open Panel</a>
+		  </div>
+
+		  <h2 align="center"><font color="#1680BC">Składniki</font></h2>
+		 <h3 align="center" id="sklID"></h3>
+		 <h2 align="center"><font color="#1680BC">Przepis</font></h2>
+		 <h3 align="center" id="przID"></h3>
+		 
+
+		 <button id="nast" onclick="nastepnePyt()">Nastepny przepis</button>
+	
+		  <div data-role="footer">
+		    <h1>© Justyna Gruca, Natalia Gola</h1>
+		  </div> 
+		</div> 	
+		
+		
+	<div data-role="page" id="dodaj przepis">
+		  <div data-role="panel" id="myPanel6" data-display="overlay"> 
+		    <h2>Moje przepisy</h2>
+		    <ul data-role="listview">
+				<li><a href="#stronaGlowna" class="ui-btn ui-icon-home ui-btn-icon-right">Strona główna</a></li>
+			      <li><a href="#sniadanie" class="ui-btn ui-icon-gear ui-btn-icon-right">Śniadanie</a></li>
+			      <li><a href="#obiad" class="ui-btn ui-icon-clock ui-btn-icon-right">Obiad</a></li>
+			      <li><a href="#kolacja" class="ui-btn ui-icon-star ui-btn-icon-right">Kolacja</a></li>
+			      <li><a href="#deser" class="ui-btn ui-icon-heart ui-btn-icon-right">Deser</a></li>
+				  <li><a href="#deser" class="ui-btn ui-icon-plus ui-btn-icon-right">Dodaj przepis</a></li>
+				  <li><a href="#informacje" class="ui-btn ui-icon-info ui-btn-icon-right">Informacje</a></li>
+    		</ul>	  	       
+		  </div> 
+
+		  <div data-role="header">
+		    <h1>Dodaj przepis</h1>
+		    <a href="#myPanel5" class="ui-btn ui-icon-bars ui-btn-icon-left ui-btn-icon-notext ui-btn-inline ui-corner-all ui-shadow">Open Panel</a>
+		  </div>
+
+		<form method="post" action="#">
+					
+						<fieldset class="ui-field-contain">
+							<label for="rodzaj">Rodzaj posiłku</label>
+							<select name="rodzaj" id="rodzaj">
+							  <option value="śniadanie">Śniadanie</option>
+							  <option value="obiad">Obiad</option>
+							  <option value="kolacja">Kolacja</option>
+							  <option value="deser">Deser</option>
+							</select>
+						</fieldset>
+					
+						<label for="nazwa">Nazwa posiłku:</label>
+						<input type="text" name="nazwa" id="nazwa"/>
+						
+						<label for="skladniki">Składniki:</label>						
+						<textarea name="skladniki" id="skladniki"></textarea>
+						
+						<label for="opis">Opis wykonania:</label>
+						<textarea name="opis" id="opis"></textarea>
+						
+						<label for="plik">Załącz zdjęcie</label>
+						<input type="file" name="plik" id="plik" accept="image/*" />
+						<span id="span"><img id="camera" src="" /></span>
+						
+						<a href="#" onclick="zdjecie()" class="ui-btn ui-icon-camera ui-btn-icon-left ui-corner-all ui-shadow">Zrób zdjęcie</a>
+						<a href="#" onclick="zapisz()" class="ui-btn">Zapisz</a>
+					</form>
+	
+		  <div data-role="footer">
+		    <h1>© Justyna Gruca, Natalia Gola</h1>
+		  </div> 
+		</div> 			
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+<div data-role="page" id="informacje">
+		  <div data-role="panel" id="myPanel7" data-display="overlay"> 
+		    <h2>Moje przepisy</h2>
+		    <ul data-role="listview">
+			      <li><a href="#stronaGlowna" class="ui-btn ui-icon-home ui-btn-icon-right">Strona główna</a></li>
+			      <li><a href="#sniadanie" class="ui-btn ui-icon-gear ui-btn-icon-right">Śniadanie</a></li>
+			      <li><a href="#obiad" class="ui-btn ui-icon-clock ui-btn-icon-right">Obiad</a></li>
+			      <li><a href="#kolacja" class="ui-btn ui-icon-star ui-btn-icon-right">Kolacja</a></li>
+			      <li><a href="#deser" class="ui-btn ui-icon-heart ui-btn-icon-right">Deser</a></li>
+				  <li><a href="#deser" class="ui-btn ui-icon-plus ui-btn-icon-right">Dodaj przepis</a></li>
+				  <li><a href="#informacje" class="ui-btn ui-icon-info ui-btn-icon-right">Informacje</a></li>
+    		</ul>  	       
+		  </div> 
+
+		  <div data-role="header">
+		    <h1>Informacje</h1>
+		    <a href="#myPanel7" class="ui-btn ui-icon-bars ui-btn-icon-left ui-btn-icon-notext ui-btn-inline ui-corner-all ui-shadow">Open Panel</a>
+		  </div>
+
+		
+		  
+	 <div data-role="main" class="ui-content">
+<h2> Informacje o aplikacji </h2>
+<h4> Wersja programu : 1.0.0 </h4>
+
+<div data-role="main" class="ui-content">
+    <div data-role="collapsible">
+
+   <h3>Opis</h3>
+   <p> Aplikacja umożliwia dodawanie własnych przepisów kulinarnych wraz ze zdjęciami </p>
+
+   </div>
+
+  <div data-role="main" class="ui-content">
+    <div data-role="collapsible">
+      <h3>Strona główna</h3>
+      <p>Przycisk <b>Nawiguj do restauracji</b> pozwala na wyznaczenie drogi z obecnej lokalizacji do uczelni.</p>
+      <p>Przycisk <b>Dodaj zdjęcie</b> pozwala wykonać zdjęcie.</p>
+      <p>Przycisk <b>Sprawdź stan sieci</b> odczytuje informacje o sieci do której podłączony jest telefon.</p>
+      
+
+    </div>
+
+
+  </div>
+  <div data-role="main" class="ui-content">
+    <div data-role="collapsible">
+      <h3>Śniadanie</h3>
+      <p>Pozwala na znalezienie przepisu.</p>
+    </div>
+  </div>
+
+
+  <div data-role="main" class="ui-content">
+    <div data-role="collapsible">
+      <h3>Obiad</h3>
+      <p>Pozwala na znalezienie przepisu.</p>
+    </div>
+  </div>
+
+
+   <div data-role="main" class="ui-content">
+    <div data-role="collapsible">
+      <h3>Kolacja</h3>
+      <p>Pozwala na znalezienie przepisu.</p>
+    </div>
+  </div>
+
+   <div data-role="main" class="ui-content">
+    <div data-role="collapsible">
+      <h3>Deser</h3>
+      <p>Pozwala na znalezienie przepisu.</p>
+    </div>
+  </div>
+  
+     <div data-role="main" class="ui-content">
+    <div data-role="collapsible">
+      <h3>Dodaj przepis</h3>
+      <p>Pozwala na dodanie przepisu.</p>
+    </div>
+  </div>
+  
+   <div data-role="main" class="ui-content">
+    <div data-role="collapsible">
+      <h3>O autorze</h3>
+      <p>Autorzy aplikacji: <b>Justyna Gruca, Natalia Gola </b></p>
+       <p>Numer grupy dziekańskiej: <b>KrDUIs2012</b></p>
+       
+    </div>
+  </div>
+
+
+
+		  <div data-role="footer">
+		    <h1>©Justyna Gruca, Natalia Gola</h1>
+		  </div> 
+		</div>
+</body>
+</html>  -->

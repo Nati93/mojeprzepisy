@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns     = "http://www.w3.org"
+        xmlns:gap = "http://phonegap.com/ns/1.0"
+        id        = "pl.grucajustynanataliagola.ksiazkakucharska"
+        versionCode = "1"
+        version   = "1.0.0">
+        <name>Ksiazka Kucharska</name>
+        <description>Aplikacja mająca na celu pomoc w gotowaniu</description>
+        <author>HJustyna Gruca, Natalia Gola</author>
+<gap:icon src="icon/ldpi.png" platform="android" qualifier="ldpi" />
+<gap:icon src="icon/mdpi.png" platform="android" qualifier="mdpi" />
+<gap:icon src="icon/hdpi.png" platform="android" qualifier="hdpi" />
+<gap:icon src="icon/xhdpi.png" platform="android" qualifier="xhdpi" />
+<gap:icon src="icon/xxhdpi.png" platform="android" qualifier="xxhdpi" />
+<gap:icon src="icon/fr-xxhdpi.png" platform="android" qualifier="fr-xxhdpi" />
+<!-- <gap:splash src="splash.png" />
+<preference name="SplashScreen" value="splash" /> -->
+<gap:feature name="http://api.phonegap.com/1.0/battery"/>
+ <feature name="Camera">
+    <param name="android-package" value="org.apache.cordova.CameraLauncher" />
+    <param name="ios-package" value="CDVCamera" />
+</feature>   
+<gap:feature name="http://api.phonegap.com/1.0/camera"/>
+<gap:feature name="http://api.phonegap.com/1.0/contacts"/>
+<gap:feature name="http://api.phonegap.com/1.0/file"/>
+<gap:feature name="http://api.phonegap.com/1.0/geolocation"/>
+<gap:feature name="http://api.phonegap.com/1.0/media"/>
+<gap:feature name="http://api.phonegap.com/1.0/network"/>
+<gap:feature name="http://api.phonegap.com/1.0/notification"/>
+<gap:feature name="http://api.phonegap.com/1.0/device"/>  
+<!-- <gap:plugin name="org.apache.cordova.splashscreen" />
+<preference name="SplashScreen" value="screen" />
+<preference name="SplashScreenDelay" value="5000" /> -->
+<!--<splash src="icon2.png" platform="android" qualifier="hdpi" /> -->
+<!-- <gap:splash gap:platform="android" gap:qualifier="port-hdpi" src="icon.png" />  
+<gap:splash src="splash.png" />    --> 
+ 
+<gap:plugin name="cordova-plugin-network-information" source="npm" />
+
+</widget>
+
+
+
+<!-- <?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns     = "http://www.w3.org"
+        xmlns:gap = "http://phonegap.com/ns/1.0"
+        id        = "pl.grucajustynanataliagola.ksiazkakucharska"
+        versionCode = "1"
+        version   = "1.0.0">
+		<name>Ksiazka Kucharska</name>
+		<description>Aplikacja mająca na celu pomoc w gotowaniu</description>
+		<author>HJustyna Gruca, Natalia Gola</author>
+
+		 <platform name="android"> -->
+        <!--
+            ldpi    : 36x36 px
+            mdpi    : 48x48 px
+            hdpi    : 72x72 px
+            xhdpi   : 96x96 px
+            xxhdpi  : 144x144 px
+            xxxhdpi : 192x192 px
+        -->
+      <!--   <icon src="res/icon/ldpi.png" density="ldpi" />
+        <icon src="res/icon/mdpi.png" density="mdpi" />
+        <icon src="res/icon/hdpi.png" density="hdpi" />
+        <icon src="res/icon/xhdpi.png" density="xhdpi" />
+        <icon src="res/icon/xxhdpi.png" density="xxhdpi" />
+        <icon src="res/icon/xxxhdpi.png" density="xxxhdpi" />
+    </platform>
+
+    <platform name="android"> -->
+    <!-- you can use any density that exists in the Android project -->
+    <!-- <splash src="res/screen/splash-land-hdpi.png" density="land-hdpi"/>
+    <splash src="res/screen/splash-land-ldpi.png" density="land-ldpi"/>
+    <splash src="res/screen/splash-land-mdpi.png" density="land-mdpi"/>
+    <splash src="res/screen/splash-land-xhdpi.png" density="land-xhdpi"/>
+
+    <splash src="res/screen/splash-port-hdpi.png" density="hdpi"/>
+    <splash src="res/screen/splash-port-ldpi.png" density="ldpi"/>
+    <splash src="res/screen/splash-port-mdpi.png" density="mdpi"/>
+    <splash src="res/screen/splash-port-xhdpi.png" density="xhdpi"/>
+</platform>
+
+<platform name="android">
+<plugin name="cordova-plugin-splashscreen" source="npm" version="3.2.1" /> -->
+<!-- <plugin name="cordova-plugin-splashscreen" spec="2.1.0" source="pgb" /> -->
+<!-- </platform>
+<preference name="AutoHideSplashScreen" value="true" />
+<preference name="FadeSplashScreen" value="true" />
+<preference name="FadeSplashScreenDuration" value="500" />
+<preference name="ShowSplashScreenSpinner" value="false"/>
+<preference name="SplashMaintainAspectRatio" value="true" />
+<preference name="SplashShowOnlyFirstTime" value="true" /> -->
+<!-- <preference name="SplashScreen" value="screen" /> -->
+<!-- <preference name="SplashScreenDelay" value="4000" />
+
+	<preference name="permissions" value="all"/>
+
+	<gap:platform name="android" />
+    <gap:plugin name="cordova-plugin-network-information" source="npm" />
+    <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" source="npm" />
+	<preference name="phonegap-version" value="cli-6.5.0" />
+</widget> -->
